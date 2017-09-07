@@ -1,0 +1,11 @@
+.landSlot {
+    cursor: pointer;
+}
+
+.sold {
+    background: lightgreen;
+}
+
+.unsold {
+    background: lightgrey;
+}
