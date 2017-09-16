@@ -22,7 +22,7 @@ export class Account {
 
     check() {
         if (this.balance < 0) {
-            throw new Error('Account has no balance', this.balance)
+            throw new Error(`Account has no balance, current balance  ${this.balance}` )
         }
     }
 

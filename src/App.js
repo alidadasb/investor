@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import {SlotMap} from "./slotMap/SlotMap";
 import {Profile} from "./profile/Profile";
@@ -13,6 +13,14 @@ class App extends Component {
         this.gameManager.registerCallback( ()=> {
             this.setState({time: Math.random()})
         })
+
+        this.worker = new Worker('workers/PriceController.js');
+
+        this.worker.addEventListener('message', () => {
+            console.log('app receiving from worker')
+        });
+
+        this.worker.postMessage(JSON.stringify(this.gameManager.lands));
     }
 
     render() {
@@ -20,7 +28,6 @@ class App extends Component {
         return (
             <div className="App">
                 <div className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
                     <Profile users={users}/>
                     <h2>Welcome to React</h2>
                 </div>
