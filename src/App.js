@@ -5,7 +5,6 @@ import {SlotMap} from "./slotMap/SlotMap";
 import {Profile} from "./profile/Profile";
 import {GameManager} from "./core/gameManager";
 import {Tools} from './util/tools'
-import {PriceCalculator} from "./core/PriceCalculator";
 
 Array.prototype.sum = function (prop) {
     let total = 0;
@@ -34,22 +33,25 @@ class App extends Component {
             }
         });
 
-        setInterval(()=> {
-            let message = JSON.stringify(Tools.strMapToObj(this.gameManager.lands));
-            let calc = new PriceCalculator(message);
-            calc.process();
-            calc.getData()
-        }, 10000)
+        // setInterval(()=> {
+        //     let message = JSON.stringify(Tools.strMapToObj(this.gameManager.lands));
+        //     let calc = new PriceCalculator(message);
+        //     calc.process();
+        //     calc.getData()
+        // }, 10000)
     }
 
 
     render() {
-        let users = [{username: 'Alidad', money: 20000}, {username: 'Sara', money: 20000}];
+        let users = [{username: 'Alidad', money: 1000000}, {username: 'Sara', money: 20000}];
         return (
             <div className="App">
                 <div className="App-header">
                     <Profile users={users}/>
-                    <h2>Welcome to React</h2>
+                    <h2>Welcome to React TURN (${this.gameManager.turn}) </h2>
+                    <button onClick={()=> {
+                        this.gameManager.play()
+                    }}>End Day</button>
                 </div>
                 <SlotMap/>
             </div>

@@ -1,8 +1,10 @@
 import lodash from 'lodash'
 import {GameManager} from "../core/gameManager";
+import {InvestorObject} from "../InvestorObject";
 
-export class Land {
+export class Land extends InvestorObject{
     constructor(id, location, landValue) {
+        super();
         this.id = id;
         this.location = location;
         this.owner = null;
@@ -23,7 +25,20 @@ export class Land {
 
 
     get value() {
-        return this.buildings.sum('value')  + this.landValue
+        return this.round(this.landValue)
+    }
+
+    get valueStr() {
+        return this.numberWithCommas(this.value)
+    }
+
+
+    get businessValue() {
+        return this.round (this.buildings.sum('value'))
+    }
+
+    get businessValueStr() {
+        return this.numberWithCommas(this.businessValue)
     }
 
     get address() {
@@ -39,12 +54,8 @@ export class Land {
         return this.owner && this.owner.id !== id;
     }
 
-    getIncome () {
-        let buildingIncome = 0;
-        this.buildings.forEach( building => {
-            buildingIncome+= building.income
-        })
-
-        return buildingIncome
+    get income() {
+        return this.buildings.sum('income')
     }
+
 }

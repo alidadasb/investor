@@ -9,7 +9,7 @@ export class Business {
     }
 
     get grossPotentialIncome() {
-        return this.expences.sum('value')
+        return this.incomes.sum('value')
     }
 
     get grossOperatingIncome () {
@@ -24,12 +24,12 @@ export class Business {
         return this.grossOperatingIncome - this.operatingExpenses
     }
 
-    get value() {
-        return this.capRate * this.netOperatingIncome
-    }
-
     get capRate() {
         return this.netOperatingIncome / this.salePrice
+    }
+
+    get value() {
+        return this.capRate * this.netOperatingIncome
     }
 
 }

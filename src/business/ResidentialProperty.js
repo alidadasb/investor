@@ -7,6 +7,7 @@ import {Expense} from "../expense/Expense";
 export class ResidentialProperty extends Business {
     constructor (salePrice) {
         super(BusinessTypes.residential, salePrice);
+        console.log(salePrice);
         this.incomes.push(new Income('unit1', Tools.calDailyPerYearlyIncomePercentage(this.salePrice, 1)));
         this.incomes.push(new Income('unit2', Tools.calDailyPerYearlyIncomePercentage(this.salePrice, 1)));
         this.incomes.push(new Income('unit3', Tools.calDailyPerYearlyIncomePercentage(this.salePrice, 1)));

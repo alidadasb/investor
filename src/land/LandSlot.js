@@ -4,6 +4,13 @@ import {GameManager} from "../core/gameManager";
 const manager = new GameManager();
 export class LandSlot extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        }
+    }
+
     selected(location) {
 
         let land = manager.getLand(location);
@@ -17,10 +24,11 @@ export class LandSlot extends React.Component {
     }
 
     renderBuildings() {
-        this.props.land.buildings.map(function (building, index) {
-            return <b>{index}</b>
+        return this.props.land.buildings.map(function (building, index) {
+            return <b key={index}>{index}(${building.health})</b>
         })
     }
+
     render () {
         return (
             <div onClick={ ()=>
@@ -31,9 +39,11 @@ export class LandSlot extends React.Component {
                  title={this.props.land.address}>
                 <b>X</b>
                 <div>{this.renderBuildings()}</div>
-                <div>{this.props.land.address}</div>
-                <div>${this.props.land.value}</div>
-                <div>{this.props.land.owner.username}</div>
+                <div>A:{this.props.land.address}</div>
+                <div>U:{this.props.land.owner.username}</div>
+                <div>V:${this.props.land.valueStr}</div>
+                <div>BV:${this.props.land.businessValueStr}</div>
+                <div>I:${this.props.land.income} </div>
             </div>
         )
     }

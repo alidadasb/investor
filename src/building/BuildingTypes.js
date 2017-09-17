@@ -1,5 +1,5 @@
-module.exports.BuildingTypes = {
-    residential: Symbol('residential'),
-    commercial: Symbol('commercial'),
-    office: Symbol('office'),
-}
+module.exports.BuildingTypes = Object.freeze({
+    residential: 'residential',
+    commercial: 'commercial',
+    office: 'office',
+});

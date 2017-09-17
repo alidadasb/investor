@@ -1,8 +1,8 @@
-export class Invoice {
-    constructor(sellerAccount, amount, collateralLand) {
+export class LandInvoice {
+    constructor(sellerAccount, amount, collateralProperty) {
         this.sellerAccount = sellerAccount;
         this.amount = amount;
-        this.collateralLand = collateralLand
+        this.collateralLand = collateralProperty
     }
 
     void () {

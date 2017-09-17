@@ -1,5 +1,5 @@
-module.exports.BusinessTypes = {
-    residential: Symbol('residential'),
-    commercial: Symbol('commercial'),
-    office: Symbol('office'),
-};
+module.exports.BusinessTypes = Object.freeze({
+    residential: 'residential',
+    commercial: 'commercial',
+    office: 'office'
+});

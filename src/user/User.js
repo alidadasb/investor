@@ -1,8 +1,10 @@
 /* eslint-disable */
 import {Account} from "../core/Account";
+import {InvestorObject} from "../InvestorObject";
 
-export  class User {
+export  class User extends InvestorObject{
     constructor(name, money) {
+        super();
         this.username = name;
         this.color = this.getRandomColor();
         this.id = this.uuidv4();
@@ -10,28 +12,12 @@ export  class User {
         this.properties = {}
     }
 
-    getRandomColor() {
-        let letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    }
-
-    uuidv4() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    }
-
-    buy(invoice) {
+    buyLand(invoice) {
         this.properties[location] = invoice.pay(this);
     }
 
-    canAfford(land) {
-        return land.value <= this.account.balance
+    canAfford(value) {
+        return value <= this.account.balance
     }
 
 }

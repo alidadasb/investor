@@ -1,10 +1,8 @@
 import {Land} from "../land/Land";
 import * as lodash from "lodash";
-import {Invoice} from "./Invoice";
-import {User} from "../user/User";
-import {Building} from "../building/Building";
-import {BuildingTypes} from "../building/BuildingTypes"
-import {ResidentialProperty} from "../business/ResidentialProperty";
+import {LandInvoice} from "./LandInvoice";
+import {Government} from "./Government";
+
 let instance = null;
 
 export class GameManager {
@@ -13,11 +11,46 @@ export class GameManager {
             instance = this
         }
 
-        this.GOVERNMENT = new User('government', 100000);
+        this.GOVERNMENT = new Government('government', 1000000);
         this.users = new Map();
         this.currentUserId = undefined;
         this.lands = new Map();
+        this._turn = 0;
+        this.tasks = [];
         return instance
+    }
+
+    reset() {
+        this._turn = 0
+    }
+
+    _playTurn() {
+        for (let [key, land] of this.lands) {
+                land.owner.account.deposit(land.income)
+            }
+    }
+
+    play() {
+        this._turn++;
+
+        let temp = this.tasks.filter(t => {
+            if (t) {
+                return t.execute()
+            }
+
+            return true
+        });
+
+        this.tasks = temp;
+
+        this._playTurn();
+        this.update();
+        return this.turn
+
+    }
+
+    get turn() {
+        return this._turn
     }
 
     registerCallback(method) {
@@ -28,23 +61,30 @@ export class GameManager {
         this.currentUserId = userId
     }
 
+
     buyBuilding(land) {
-        let building = new ResidentialProperty(1000000);
-        land.constructBuilding(building)
+        let user = this.getUser(this.currentUserId);
+        let contract = this.GOVERNMENT.buyBuilding(land, user);
+        if (contract) {
+            this.tasks.push(contract);
+        }
+
+
+        this.update();
     }
 
     buy(land) {
         let user = this.getUser(this.currentUserId);
 
-        if (!user.canAfford(land)) {
+        if (!user.canAfford(land.value)) {
             alert(`${user.username} cannot afford to purchase lot ${land.address}`);
             return;
         }
 
 
         if (this.canBeSold(land) && window.confirm(` ${user.username}! Are you sure you want to purchase lot ${land.address} ?`)) {
-            let invoice = new Invoice(this.GOVERNMENT.account, land.value, land);
-            user.buy(invoice)
+            let invoice = new LandInvoice(this.GOVERNMENT.account, land.value, land);
+            user.buyLand(invoice)
         }
 
         this.update()
@@ -67,7 +107,7 @@ export class GameManager {
 
         for (let row = rows; row > 0; row--) {
             for (let col = cols; col > 0; col--) {
-                let land = new Land(this.key(col, row), {col: col, row: row}, lodash.random(100, 10000));
+                let land = new Land(this.key(col, row), {col: col, row: row}, lodash.random(100000, 300000));
                 land.owner = this.GOVERNMENT;
                 this.lands.set(this.key(col, row), land);
             }

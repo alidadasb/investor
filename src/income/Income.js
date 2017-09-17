@@ -19,4 +19,8 @@ export class Income {
     get hourly(){
         return this._hourly
     }
+
+    get value() {
+        return this.yearly
+    }
 }

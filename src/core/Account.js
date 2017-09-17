@@ -1,11 +1,15 @@
 export class Account {
     constructor(name, money) {
         this.name = name;
-        this.balance = money || 0
+        this._balance = money || 0
+    }
+
+    get balance (){
+        return this._balance
     }
 
     widthraw(money) {
-        this.balance -= money;
+        this._balance -= money;
 
         this.check();
 
@@ -13,7 +17,7 @@ export class Account {
     }
 
     deposit(money) {
-        this.balance += money;
+        this._balance += money;
 
         this.check();
 
