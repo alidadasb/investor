@@ -1,11 +1,18 @@
-export class Account {
+import {InvestorObject} from "../InvestorObject";
+
+export class Account extends InvestorObject{
     constructor(name, money) {
+        super();
         this.name = name;
         this._balance = money || 0
     }
 
     get balance (){
         return this._balance
+    }
+
+    get balanceStr (){
+        return this.comma(this._balance)
     }
 
     widthraw(money) {

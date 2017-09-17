@@ -6,12 +6,9 @@ export class ConstructionContract {
         this.land = land;
         this.contractor = contractor;
 
+
         let governmentCost = this.government.evaluateConstructionCost(land, building);
         let estimate = contractor.estimate(building);
-
-        if (!this.buyer.canAfford(estimate + governmentCost)) {
-            throw  new Error ('user cannot afford building cost')
-        }
 
         this.government.account.deposit(this.buyer.account.widthraw(governmentCost));
         this.building.licence = this.government.getLicense();

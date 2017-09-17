@@ -43,7 +43,7 @@ export class LandSlot extends React.Component {
                 <div>U:{this.props.land.owner.username}</div>
                 <div>V:${this.props.land.valueStr}</div>
                 <div>BV:${this.props.land.businessValueStr}</div>
-                <div>I:${this.props.land.income} </div>
+                <div>I:${this.props.land.incomeStr} </div>
             </div>
         )
     }

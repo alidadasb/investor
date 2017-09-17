@@ -3,7 +3,6 @@ import {ConstructionContract} from "../building/ConstructionContract";
 import {ResidentialProperty} from "../business/ResidentialProperty";
 import {Building} from "../building/Building";
 import {Contractor} from "./Contractor";
-import * as lodash from "lodash";
 import {BuildingTypes} from "../building/BuildingTypes"
 
 export class Government extends User {
@@ -26,22 +25,31 @@ export class Government extends User {
         let constructionContract;
 
         let building = new Building(BuildingTypes.residential, 500000, 5);
+        building.addBusiness(new ResidentialProperty());
+
         let salePrice = 1.1 * building.valuation;
 
-        let residentialProperty = new ResidentialProperty(salePrice);
-        building.addBusiness(residentialProperty);
-        if (!window.confirm(`Are you sure you want to pay ${this.comma(salePrice)} `)) {
+        let governmentCost = this.evaluateConstructionCost(land, building);
+        let contractor = this.getContractor();
+        let contractorFees = contractor.estimate(building);
+
+        let value = salePrice + contractorFees + governmentCost;
+
+
+        if (!window.confirm(`Are you sure you want to pay ${this.comma(value)} `)) {
             return;
         }
 
-        if (!user.canAfford(salePrice)) {
-            alert(`${user.username} cannot afford to complete the construction cost ${salePrice}`);
+        if (!user.canAfford(value)) {
+            alert(`${user.username} cannot afford to complete the construction cost ${value}`);
             return;
         }
+
 
         this.account.deposit(user.account.widthraw(salePrice));
 
-        constructionContract = new ConstructionContract(user, this, building, land, this.getContractor());
+
+        constructionContract = new ConstructionContract(user, this, building, land, contractor);
         if (constructionContract) {
             land.constructBuilding(building);
         }

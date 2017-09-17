@@ -1,7 +1,11 @@
-export class Income {
+import {InvestorObject} from "../InvestorObject";
+
+export class Income extends InvestorObject{
     constructor (type, _hourly) {
+        super();
         this.type = type;
-        this._hourly = _hourly
+        this._hourly = _hourly;
+        console.log(_hourly);
     }
 
     get yearly() {
@@ -21,6 +25,6 @@ export class Income {
     }
 
     get value() {
-        return this.yearly
+        return this.round(this.daily)
     }
 }

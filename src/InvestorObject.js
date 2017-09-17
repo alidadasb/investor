@@ -26,7 +26,7 @@ export class InvestorObject {
     }
 
     comma(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return this.round(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     round (number) {

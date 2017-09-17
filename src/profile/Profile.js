@@ -37,7 +37,7 @@ export class Profile extends React.Component {
                     let user = this.gameManager.getUser(userId);
                     return ( <div onClick={() => this.activate(userId)} key={userId}>
                         <div>{this.gameManager.currentUserId === user.id ? '*' : ''} <span className="clickable"> {user.username}</span>
-                            : ${user.account.balance}</div>
+                            : ${user.account.balanceStr}</div>
                     </div>)
                 })}
             </div>

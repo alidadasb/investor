@@ -5,7 +5,7 @@ export class Building extends InvestorObject {
         super();
         this.type = type;
         this.businesses = [];
-        this._contructionCost= _constructionCost;
+        this._contructionCost = _constructionCost;
         this.health = 0;
         this.constructionTurn = constructionTurn
     }
@@ -47,7 +47,7 @@ export class Building extends InvestorObject {
     }
 
     get income() {
-        return this.health=== this.constructionTurn ? this.businesses.sum('netOperatingIncome') : 0
+        return this.health === this.constructionTurn ? this.businesses.sum('netOperatingIncome'): 0
     }
 
 }

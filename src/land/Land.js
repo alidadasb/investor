@@ -58,4 +58,8 @@ export class Land extends InvestorObject{
         return this.buildings.sum('income')
     }
 
+    get incomeStr() {
+        return this.comma(this.income)
+    }
+
 }

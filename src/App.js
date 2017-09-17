@@ -52,6 +52,17 @@ class App extends Component {
                     <button onClick={()=> {
                         this.gameManager.play()
                     }}>End Day</button>
+
+                    <button onClick={()=> {
+                        for (let day = 0;day< 30; day++) {
+                            this.gameManager.play()
+                        }
+                    }}>End Month</button>
+                    <button onClick={()=> {
+                        for (let day = 0;day< 30 * 12; day++) {
+                            this.gameManager.play()
+                        }
+                    }}>End Year</button>
                 </div>
                 <SlotMap/>
             </div>
