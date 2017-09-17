@@ -2,7 +2,9 @@ import {Land} from "../land/Land";
 import * as lodash from "lodash";
 import {Invoice} from "./Invoice";
 import {User} from "../user/User";
-
+import {Building} from "../building/Building";
+import {BuildingTypes} from "../building/BuildingTypes"
+import {ResidentialProperty} from "../business/ResidentialProperty";
 let instance = null;
 
 export class GameManager {
@@ -26,9 +28,13 @@ export class GameManager {
         this.currentUserId = userId
     }
 
-    buy(location) {
+    buyBuilding(land) {
+        let building = new ResidentialProperty(1000000);
+        land.constructBuilding(building)
+    }
+
+    buy(land) {
         let user = this.getUser(this.currentUserId);
-        let land = this.getLand(location);
 
         if (!user.canAfford(land)) {
             alert(`${user.username} cannot afford to purchase lot ${land.address}`);
@@ -45,7 +51,11 @@ export class GameManager {
     }
 
     canBeSold(land) {
-        return land.owner === this.GOVERNMENT && land.owner.id !== this.currentUserId;
+        return this.isOwnedByGovernment(land) && land.owner.id !== this.currentUserId;
+    }
+
+    isOwnedByGovernment(land) {
+        return land.owner === this.GOVERNMENT;
     }
 
     key(x, y) {
